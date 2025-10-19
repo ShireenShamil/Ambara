@@ -15,6 +15,11 @@ import AdminProducts from './pages/admin/Products'
 import AdminMessages from './pages/admin/Messages'
 import AdminAnalytics from './pages/admin/Analytics'
 import AdminSettings from './pages/admin/Settings'
+import AdminTemplates from './pages/admin/Templates'
+import AdminPrintJobs from './pages/admin/PrintJobs'
+import AdminReports from './pages/admin/Reports'
+import AdminInvoices from './pages/admin/Invoices'
+import AdminNotifications from './pages/admin/Notifications'
 
 // Customer pages
 import UserDashboard from './pages/customer/Dashboard'
@@ -39,7 +44,12 @@ export default function App() {
         <Route path="/admin/orders" element={<AdminOrders />} />
         <Route path="/admin/products" element={<AdminProducts />} />
         <Route path="/admin/messages" element={<AdminMessages />} />
-        <Route path="/admin/analytics" element={<AdminAnalytics />} />
+  <Route path="/admin/analytics" element={<AdminAnalytics />} />
+  <Route path="/admin/templates" element={<AdminTemplates />} />
+  <Route path="/admin/print-jobs" element={<AdminPrintJobs />} />
+  <Route path="/admin/reports" element={<AdminReports />} />
+  <Route path="/admin/invoices" element={<AdminInvoices />} />
+  <Route path="/admin/notifications" element={<AdminNotifications />} />
         <Route path="/admin/settings" element={<AdminSettings />} />
       </Route>
 
