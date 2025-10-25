@@ -7,23 +7,30 @@ import {
   Avatar,
   IconButton,
   Tooltip,
-  Card,
-  CardContent,
   Grid,
   Button,
   TextField,
-  InputAdornment
+  InputAdornment,
+  Card,
+  CardContent,
 } from '@mui/material'
+import {
+  DataGrid,
+  GridToolbar,
+} from '@mui/x-data-grid'
 import Navbar from '../../components/Navbar'
 import SidebarAdmin from '../../components/SidebarAdmin'
 import AdminPage from '../../components/AdminPage'
-import ProductQuickEdit from '../../components/ProductQuickEdit'
 import BulkImport from '../../components/BulkImport'
-import TableCRUD from '../../components/TableCRUD'
+import ProductQuickEdit from '../../components/ProductQuickEdit'
+import SearchIcon from '@mui/icons-material/Search'
+import EditIcon from '@mui/icons-material/Edit'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import ArchiveIcon from '@mui/icons-material/Archive'
-import EditIcon from '@mui/icons-material/Edit'
-import SearchIcon from '@mui/icons-material/Search'
+import tshirtImage from '../../images/tshirt.jpeg'
+import Mug from '../../images/mug.jpeg'
+import Frame from '../../images/frame.jpeg'
+import Brand from '../../images/brand.jpeg'
 
 export default function AdminProducts() {
   const [sidebarOpen, setSidebarOpen] = useState(true)
@@ -33,133 +40,197 @@ export default function AdminProducts() {
   const [selected, setSelected] = useState(null)
   const [editOpen, setEditOpen] = useState(false)
 
-  // Dummy Products
   const products = [
-    { id: 'P001', title: 'Custom T-Shirt', price: 25, stock: 50, category: 'Apparel', type: 'T-Shirt', material: 'Cotton', status: 'Ready', image: '' },
-    { id: 'P002', title: 'Logo Mug', price: 15, stock: 80, category: 'Decor', type: 'Mug', material: 'Ceramic', status: 'Custom', image: '' },
-    { id: 'P003', title: 'Photo Frame', price: 40, stock: 20, category: 'Decor', type: 'Frame', material: 'Wood', status: 'Ready', image: '' },
-    { id: 'P004', title: 'Custom Logo', price: 100, stock: 5, category: 'Design', type: 'Logo', material: 'Digital', status: 'Ready', image: '' },
+    { id: 'P001', title: 'Custom T-Shirt', price: 25, stock: 50, category: 'Apparel', type: 'T-Shirt', material: 'Cotton', status: 'Ready', image: tshirtImage },
+    { id: 'P002', title: 'Logo Mug', price: 15, stock: 80, category: 'Decor', type: 'Mug', material: 'Ceramic', status: 'Custom', image: Mug },
+    { id: 'P003', title: 'Photo Frame', price: 40, stock: 20, category: 'Decor', type: 'Frame', material: 'Wood', status: 'Ready', image: Frame },
+    { id: 'P004', title: 'Custom Logo', price: 100, stock: 5, category: 'Design', type: 'Logo', material: 'Digital', status: 'Ready', image: Brand },
   ]
 
-  // Filtered Products
-  const filteredProducts = products.filter(p => 
+  const filteredProducts = products.filter(p =>
     (!filterCategory || p.category === filterCategory) &&
     (!filterType || p.type === filterType) &&
     (p.title.toLowerCase().includes(search.toLowerCase()) || p.id.toLowerCase().includes(search.toLowerCase()))
   )
 
-  function openEdit(p){ setSelected(p); setEditOpen(true) }
+  function openEdit(p) {
+    setSelected(p)
+    setEditOpen(true)
+  }
 
-  // Columns for TableCRUD
   const columns = [
-    { field: 'id', headerName: 'ID', width: 120 },
-    { field: 'title', headerName: 'Title', width: 180 },
-    { field: 'type', headerName: 'Print Type', width: 120 },
-    { field: 'material', headerName: 'Material', width: 120 },
-    { field: 'price', headerName: 'Price', width: 100 },
-    { field: 'stock', headerName: 'Stock', width: 100 },
-    { field: 'status', headerName: 'Status', width: 120, renderCell: (params)=>(
-      <Chip 
-        label={params.value} 
-        color={params.value==='Ready'?'success':params.value==='Custom'?'info':'default'} 
-        size="small" 
-      />
-    )},
-    { field: 'actions', headerName: 'Actions', width: 120, renderCell: (params)=>(
-      <Stack direction="row" spacing={1}>
-        <Tooltip title="Edit"><IconButton size="small" onClick={()=>openEdit(params.row)}><EditIcon fontSize="small"/></IconButton></Tooltip>
-        <Tooltip title="Duplicate"><IconButton size="small"><ContentCopyIcon fontSize="small"/></IconButton></Tooltip>
-        <Tooltip title="Archive"><IconButton size="small"><ArchiveIcon fontSize="small"/></IconButton></Tooltip>
-      </Stack>
-    )}
+    {
+      field: 'image',
+      headerName: 'Image',
+      width: 80,
+      sortable: false,
+      filterable: false,
+      renderCell: (params) => (
+        <Avatar
+          variant="rounded"
+          src={params.value}
+          sx={{ width: 50, height: 50 }}
+        />
+      ),
+    },
+    { field: 'id', headerName: 'ID', width: 100 },
+    { field: 'title', headerName: 'Title', width: 180, editable: true },
+    { field: 'type', headerName: 'Type', width: 120 },
+    { field: 'material', headerName: 'Material', width: 120, editable: true },
+    { field: 'price', headerName: 'Price ($)', width: 110, editable: true },
+    { field: 'stock', headerName: 'Stock', width: 110, editable: true },
+    {
+      field: 'status',
+      headerName: 'Status',
+      width: 120,
+      renderCell: (params) => (
+        <Chip
+          label={params.value}
+          color={params.value === 'Ready' ? 'success' : 'info'}
+          size="small"
+        />
+      ),
+    },
+    {
+      field: 'actions',
+      headerName: 'Actions',
+      width: 140,
+      sortable: false,
+      renderCell: (params) => (
+        <Stack direction="row" spacing={1}>
+          <Tooltip title="Edit">
+            <IconButton size="small" color="success" onClick={() => openEdit(params.row)}>
+              <EditIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Duplicate">
+            <IconButton size="small" color="success">
+              <ContentCopyIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Archive">
+            <IconButton size="small" color="error">
+              <ArchiveIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        </Stack>
+      ),
+    },
   ]
 
-  // Stats calculation
   const totalProducts = products.length
-  const totalStock = products.reduce((a,b)=>a+b.stock,0)
-  const outOfStock = products.filter(p=>p.stock===0).length
-  const topTypeCount = products.reduce((acc,p)=>{ acc[p.type]=(acc[p.type]||0)+1; return acc }, {})
-  const topSellingType = Object.keys(topTypeCount).reduce((a,b)=>topTypeCount[a]>topTypeCount[b]?a:b,'')
+  const totalStock = products.reduce((a, b) => a + b.stock, 0)
+  const outOfStock = products.filter(p => p.stock === 0).length
 
   return (
     <Box display="flex">
-      <Navbar toggleSidebar={()=>setSidebarOpen(!sidebarOpen)} />
+      <Navbar toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
       <SidebarAdmin open={sidebarOpen} />
       <AdminPage open={sidebarOpen} title="Products">
-        
-        {/* Header + Add Button */}
+        {/* Header */}
         <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2}>
           <Typography variant="h4">Products</Typography>
           <Stack direction="row" spacing={2}>
-            <Button variant="contained" color="primary">+ Add Product</Button>
-            <BulkImport onImported={()=>{}} />
+            <Button
+              variant="contained"
+              sx={{ bgcolor: '#10b981', '&:hover': { bgcolor: '#059669' } }}
+            >
+              + Add Product
+            </Button>
+            <BulkImport onImported={() => { }} />
           </Stack>
         </Stack>
 
         {/* Search */}
-        <TextField 
-          placeholder="Search by ID or Title" 
-          variant="outlined" 
-          size="small" 
-          fullWidth 
-          sx={{mb:3}} 
-          InputProps={{ startAdornment: <InputAdornment position="start"><SearchIcon /></InputAdornment> }}
+        <TextField
+          placeholder="Search by ID or Title"
+          variant="outlined"
+          size="small"
+          fullWidth
+          sx={{ mb: 3 }}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon color="success" />
+              </InputAdornment>
+            ),
+          }}
           value={search}
-          onChange={(e)=>setSearch(e.target.value)}
+          onChange={(e) => setSearch(e.target.value)}
         />
 
         {/* Stats Cards */}
-        <Grid container spacing={3} sx={{ mb:3 }}>
+        <Grid container spacing={3} sx={{ mb: 3 }}>
           {[
-            { title:'Total Products', value:totalProducts, gradient:'linear-gradient(135deg, #10b981 0%, #064e3b 100%)' },
-            { title:'Total Stock', value:totalStock, gradient:'linear-gradient(135deg, #10b981 0%, #064e3b 100%)'},
-            { title:'Out of Stock', value:outOfStock, gradient:'linear-gradient(135deg, #10b981 0%, #064e3b 100%)' },
-            { title:'Top Type', gradient:'linear-gradient(135deg, #10b981 0%, #064e3b 100%)' },
-          ].map((s,i)=>(
+            { title: 'Total Products', value: totalProducts },
+            { title: 'Total Stock', value: totalStock },
+            { title: 'Out of Stock', value: outOfStock },
+          ].map((s, i) => (
             <Grid item xs={12} sm={6} md={3} key={i}>
-              <Card sx={{background:s.gradient, borderRadius:3, color:'#fff', p:2, boxShadow:'0 4px 20px rgba(0,0,0,0.1)', height:'100%'}}>
+              <Box
+                sx={{
+                  background: 'linear-gradient(135deg, #10b981 0%, #064e3b 100%)',
+                  borderRadius: 3,
+                  color: '#fff',
+                  p: 2,
+                  textAlign: 'center',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+                }}
+              >
                 <Typography variant="subtitle2">{s.title}</Typography>
-                <Typography variant="h5" sx={{fontWeight:700}}>{s.value}</Typography>
-              </Card>
+                <Typography variant="h5" sx={{ fontWeight: 700 }}>{s.value}</Typography>
+              </Box>
             </Grid>
           ))}
         </Grid>
 
         {/* Filters */}
-        <Stack direction="row" spacing={2} alignItems="center" sx={{mb:3, flexWrap:'wrap'}}>
+        <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 3, flexWrap: 'wrap' }}>
           <Typography variant="subtitle2">Category:</Typography>
-          <Chip label="All" clickable color={!filterCategory?'success':'default'} onClick={()=>setFilterCategory('')} />
-          <Chip label="Apparel" clickable onClick={()=>setFilterCategory('Apparel')} />
-          <Chip label="Decor" clickable onClick={()=>setFilterCategory('Decor')} />
-          <Chip label="Design" clickable onClick={()=>setFilterCategory('Design')} />
+          {['All', 'Apparel', 'Decor', 'Design'].map((cat) => (
+            <Chip
+              key={cat}
+              label={cat}
+              clickable
+              color={filterCategory === cat || (cat === 'All' && !filterCategory) ? 'success' : 'default'}
+              onClick={() => setFilterCategory(cat === 'All' ? '' : cat)}
+            />
+          ))}
 
-          <Typography variant="subtitle2" sx={{ ml:2 }}>Print Type:</Typography>
-          <Chip label="All" clickable color={!filterType?'success':'default'} onClick={()=>setFilterType('')} />
-          <Chip label="T-Shirt" clickable onClick={()=>setFilterType('T-Shirt')} />
-          <Chip label="Mug" clickable onClick={()=>setFilterType('Mug')} />
-          <Chip label="Frame" clickable onClick={()=>setFilterType('Frame')} />
-          <Chip label="Logo" clickable onClick={()=>setFilterType('Logo')} />
+          <Typography variant="subtitle2" sx={{ ml: 2 }}>Print Type:</Typography>
+          {['All', 'T-Shirt', 'Mug', 'Frame', 'Logo'].map((type) => (
+            <Chip
+              key={type}
+              label={type}
+              clickable
+              color={filterType === type || (type === 'All' && !filterType) ? 'success' : 'default'}
+              onClick={() => setFilterType(type === 'All' ? '' : type)}
+            />
+          ))}
         </Stack>
 
         {/* Product Cards */}
-        <Grid container spacing={3} sx={{ mb:3 }}>
+        <Grid container spacing={3} sx={{ mb: 3 }}>
           {filteredProducts.map(p => (
             <Grid item xs={12} sm={6} md={3} key={p.id}>
-              <Card sx={{
-                borderRadius:3,
-                boxShadow:'0 4px 20px rgba(0,0,0,0.1)',
-                cursor:'pointer',
-                '&:hover': { transform:'translateY(-5px)', boxShadow:'0 8px 25px rgba(0,0,0,0.2)' }
-              }} onClick={()=>openEdit(p)}>
+              <Card
+                sx={{
+                  borderRadius: 3,
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+                  cursor: 'pointer',
+                  '&:hover': { transform: 'translateY(-5px)', boxShadow: '0 8px 25px rgba(0,0,0,0.2)' }
+                }}
+                onClick={() => openEdit(p)}
+              >
                 <CardContent>
-                  <Avatar variant="rounded" src={p.image || undefined} sx={{width:'100%', height:120, mb:1, bgcolor:'#e0f2f1'}}>
+                  <Avatar variant="rounded" src={p.image || undefined} sx={{ width: '100%', height: 120, mb: 1, bgcolor: '#e0f2f1' }}>
                     {!p.image && p.title.charAt(0)}
                   </Avatar>
-                  <Typography variant="subtitle1" sx={{fontWeight:600}}>{p.title}</Typography>
+                  <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>{p.title}</Typography>
                   <Typography variant="body2" color="text.secondary">{p.type} | {p.material}</Typography>
                   <Stack direction="row" justifyContent="space-between" alignItems="center" mt={1}>
                     <Typography variant="subtitle2">${p.price}</Typography>
-                    <Chip label={p.status} color={p.status==='Ready'?'success':p.status==='Custom'?'info':'default'} size="small" />
+                    <Chip label={p.status} color={p.status === 'Ready' ? 'success' : 'info'} size="small" />
                   </Stack>
                 </CardContent>
               </Card>
@@ -167,20 +238,26 @@ export default function AdminProducts() {
           ))}
         </Grid>
 
-        {/* Product Table */}
-        <TableCRUD 
-          rows={filteredProducts} 
-          columns={columns} 
-          editable={true} 
-          onRowClick={openEdit} 
-        />
+        {/* DataGrid Table */}
+        <Box sx={{ height: 450, width: '100%', '& .MuiDataGrid-root': { borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' } }}>
+          <DataGrid
+            rows={filteredProducts}
+            columns={columns}
+            pageSize={5}
+            rowsPerPageOptions={[5, 10]}
+            checkboxSelection
+            disableSelectionOnClick
+            components={{ Toolbar: GridToolbar }}
+            onRowClick={(params) => openEdit(params.row)}
+          />
+        </Box>
 
-        {/* Quick Edit */}
-        <ProductQuickEdit 
-          open={editOpen} 
-          product={selected} 
-          onClose={()=>setEditOpen(false)} 
-          onSave={(p)=>{ setEditOpen(false); }} 
+        {/* Quick Edit Dialog */}
+        <ProductQuickEdit
+          open={editOpen}
+          product={selected}
+          onClose={() => setEditOpen(false)}
+          onSave={(p) => setEditOpen(false)}
         />
 
       </AdminPage>
