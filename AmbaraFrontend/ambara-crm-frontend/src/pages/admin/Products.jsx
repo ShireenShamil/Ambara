@@ -69,7 +69,7 @@ export default function AdminProducts() {
         <Avatar
           variant="rounded"
           src={params.value}
-          sx={{ width: 50, height: 50 }}
+          sx={{ width: 50, height: 50, bgcolor: '#e0f2f1' }}
         />
       ),
     },
@@ -99,12 +99,12 @@ export default function AdminProducts() {
       renderCell: (params) => (
         <Stack direction="row" spacing={1}>
           <Tooltip title="Edit">
-            <IconButton size="small" color="success" onClick={() => openEdit(params.row)}>
+            <IconButton size="small" sx={{ color: '#00a862' }} onClick={() => openEdit(params.row)}>
               <EditIcon fontSize="small" />
             </IconButton>
           </Tooltip>
           <Tooltip title="Duplicate">
-            <IconButton size="small" color="success">
+            <IconButton size="small" sx={{ color: '#00a862' }}>
               <ContentCopyIcon fontSize="small" />
             </IconButton>
           </Tooltip>
@@ -123,17 +123,18 @@ export default function AdminProducts() {
   const outOfStock = products.filter(p => p.stock === 0).length
 
   return (
-    <Box display="flex">
+    <Box display="flex" sx={{ backgroundColor: '#f9fdfc' }}>
       <Navbar toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
       <SidebarAdmin open={sidebarOpen} />
       <AdminPage open={sidebarOpen} title="Products">
+
         {/* Header */}
         <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2}>
-          <Typography variant="h4">Products</Typography>
+          <Typography variant="h4" sx={{ color: '#00332e' }}>Products</Typography>
           <Stack direction="row" spacing={2}>
             <Button
               variant="contained"
-              sx={{ bgcolor: '#10b981', '&:hover': { bgcolor: '#059669' } }}
+              sx={{ bgcolor: '#00a862', '&:hover': { bgcolor: '#00332e' } }}
             >
               + Add Product
             </Button>
@@ -147,11 +148,11 @@ export default function AdminProducts() {
           variant="outlined"
           size="small"
           fullWidth
-          sx={{ mb: 3 }}
+          sx={{ mb: 3, backgroundColor: '#ffffff', borderRadius: 1 }}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <SearchIcon color="success" />
+                <SearchIcon sx={{ color: '#00a862' }} />
               </InputAdornment>
             ),
           }}
@@ -161,17 +162,13 @@ export default function AdminProducts() {
 
         {/* Stats Cards */}
         <Grid container spacing={3} sx={{ mb: 3 }}>
-          {[
-            { title: 'Total Products', value: totalProducts },
-            { title: 'Total Stock', value: totalStock },
-            { title: 'Out of Stock', value: outOfStock },
-          ].map((s, i) => (
+          {[{ title: 'Total Products', value: totalProducts }, { title: 'Total Stock', value: totalStock }, { title: 'Out of Stock', value: outOfStock }].map((s, i) => (
             <Grid item xs={12} sm={6} md={3} key={i}>
               <Box
                 sx={{
-                  background: 'linear-gradient(135deg, #10b981 0%, #064e3b 100%)',
+                  background: 'linear-gradient(135deg, #00a862 0%, #00332e 100%)',
                   borderRadius: 3,
-                  color: '#fff',
+                  color: '#ecfdf5',
                   p: 2,
                   textAlign: 'center',
                   boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
@@ -186,24 +183,32 @@ export default function AdminProducts() {
 
         {/* Filters */}
         <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 3, flexWrap: 'wrap' }}>
-          <Typography variant="subtitle2">Category:</Typography>
+          <Typography variant="subtitle2" sx={{ color: '#00332e' }}>Category:</Typography>
           {['All', 'Apparel', 'Decor', 'Design'].map((cat) => (
             <Chip
               key={cat}
               label={cat}
               clickable
-              color={filterCategory === cat || (cat === 'All' && !filterCategory) ? 'success' : 'default'}
+              sx={{
+                bgcolor: filterCategory === cat || (cat === 'All' && !filterCategory) ? '#00a862' : '#ffffff',
+                color: filterCategory === cat || (cat === 'All' && !filterCategory) ? '#ffffff' : '#00332e',
+                '&:hover': { bgcolor: '#00332e', color: '#ffffff' }
+              }}
               onClick={() => setFilterCategory(cat === 'All' ? '' : cat)}
             />
           ))}
 
-          <Typography variant="subtitle2" sx={{ ml: 2 }}>Print Type:</Typography>
+          <Typography variant="subtitle2" sx={{ ml: 2, color: '#00332e' }}>Print Type:</Typography>
           {['All', 'T-Shirt', 'Mug', 'Frame', 'Logo'].map((type) => (
             <Chip
               key={type}
               label={type}
               clickable
-              color={filterType === type || (type === 'All' && !filterType) ? 'success' : 'default'}
+              sx={{
+                bgcolor: filterType === type || (type === 'All' && !filterType) ? '#00a862' : '#ffffff',
+                color: filterType === type || (type === 'All' && !filterType) ? '#ffffff' : '#00332e',
+                '&:hover': { bgcolor: '#00332e', color: '#ffffff' }
+              }}
               onClick={() => setFilterType(type === 'All' ? '' : type)}
             />
           ))}
@@ -226,10 +231,10 @@ export default function AdminProducts() {
                   <Avatar variant="rounded" src={p.image || undefined} sx={{ width: '100%', height: 120, mb: 1, bgcolor: '#e0f2f1' }}>
                     {!p.image && p.title.charAt(0)}
                   </Avatar>
-                  <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>{p.title}</Typography>
-                  <Typography variant="body2" color="text.secondary">{p.type} | {p.material}</Typography>
+                  <Typography variant="subtitle1" sx={{ fontWeight: 600, color: '#00332e' }}>{p.title}</Typography>
+                  <Typography variant="body2" sx={{ color: '#00332e' }}>{p.type} | {p.material}</Typography>
                   <Stack direction="row" justifyContent="space-between" alignItems="center" mt={1}>
-                    <Typography variant="subtitle2">${p.price}</Typography>
+                    <Typography variant="subtitle2" sx={{ color: '#00332e' }}>${p.price}</Typography>
                     <Chip label={p.status} color={p.status === 'Ready' ? 'success' : 'info'} size="small" />
                   </Stack>
                 </CardContent>

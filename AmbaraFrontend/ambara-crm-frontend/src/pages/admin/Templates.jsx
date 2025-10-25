@@ -133,7 +133,7 @@ export default function Templates() {
                     />
                     <CardContent
                       sx={{
-                        background: 'linear-gradient(135deg, #d1fae5, #a7f3d0)',
+                        
                         color: '#064e3b',
                       }}
                     >

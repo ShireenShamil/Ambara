@@ -3,11 +3,11 @@ import { createTheme } from '@mui/material/styles'
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#10b981',     // Emerald green for buttons, highlights
+      main: '#00a862',    // Ambara green for buttons, highlights
       contrastText: '#ffffff'
     },
     secondary: {
-      main: '#064e3b',     // Dark green for sidebar, cards, hover accents
+      main: '#00332e',    // Dark green for sidebar, cards, hover accents
       contrastText: '#ffffff'
     },
     success: { main: '#34d399' },
@@ -15,25 +15,19 @@ const theme = createTheme({
     error: { main: '#ef4444' },
     info: { main: '#22d3ee' },
     background: {
-      default: '#f1fdf5',  // Light mint background for dashboard
-      paper: '#ffffff'      // White card background
+      default: '#f9fdfc', // Light mint background
+      paper: '#ffffff'     // White card background
     },
     text: {
-      primary: '#064e3b',   // Dark green text
-      secondary: '#10b981', // Lighter green for highlights
+      primary: '#00332e',  // Dark green text
+      secondary: '#00a862' // Lighter green for highlights
     }
   },
   typography: {
     fontFamily: ['Inter', 'Poppins', 'Roboto', 'sans-serif'].join(','),
-    h6: {
-      fontWeight: 700
-    },
-    subtitle1: {
-      fontWeight: 600
-    },
-    subtitle2: {
-      fontWeight: 500
-    }
+    h6: { fontWeight: 700 },
+    subtitle1: { fontWeight: 600 },
+    subtitle2: { fontWeight: 500 }
   },
   components: {
     MuiButton: {
@@ -56,7 +50,7 @@ const theme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: '#064e3b'
+          backgroundColor: '#00332e'
         }
       }
     }

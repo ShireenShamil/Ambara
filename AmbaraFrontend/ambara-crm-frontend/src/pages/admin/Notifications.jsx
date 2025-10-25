@@ -74,7 +74,7 @@ export default function Notifications() {
   )
 
   return (
-    <Box display="flex" sx={{ background: 'linear-gradient(135deg, #f0fdf4, #dcfce7)', minHeight: '100vh' }}>
+    <Box display="flex" sx={{ minHeight: '100vh' }}>
       <Navbar toggleSidebar={() => setOpen(v => !v)} />
       <SidebarAdmin open={open} />
       <AdminPage open={open} title="Notifications">

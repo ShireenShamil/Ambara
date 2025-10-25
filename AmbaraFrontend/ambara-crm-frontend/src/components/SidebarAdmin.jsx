@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Drawer,
   List,
@@ -14,11 +14,13 @@ import InventoryIcon from '@mui/icons-material/Inventory'
 import MessageIcon from '@mui/icons-material/Message'
 import AnalyticsIcon from '@mui/icons-material/Analytics'
 import SettingsIcon from '@mui/icons-material/Settings'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { useTheme } from '@mui/material/styles'
 
 export default function SidebarAdmin({ open }) {
   const navigate = useNavigate()
-  const loc = useLocation()
+  const theme = useTheme() // Access MUI theme colors
+  const [activeIndex, setActiveIndex] = useState(null)
 
   const menu = [
     { text: 'Dashboard', icon: <DashboardIcon />, path: '/admin/dashboard' },
@@ -44,21 +46,21 @@ export default function SidebarAdmin({ open }) {
         flexShrink: 0,
         '& .MuiDrawer-paper': {
           width: 260,
-          background: 'linear-gradient(180deg, #064e3b 0%, #10b981 100%)',
-          color: '#fff',
+          backgroundColor: '#fff', // White sidebar
+          color: '#064e3b', // Default icon/text color
           borderRight: 'none',
-          boxShadow: '4px 0 15px rgba(0,0,0,0.2)',
+          boxShadow: '4px 0 15px rgba(0,0,0,0.1)',
           transition: 'all 0.3s ease'
         }
       }}
     >
-      <Box sx={{ textAlign: 'center', py: 3, borderBottom: '1px solid rgba(255,255,255,0.15)' }}>
+      <Box sx={{ textAlign: 'center', py: 3, borderBottom: '1px solid rgba(0,0,0,0.1)' }}>
         <Typography
           variant="h6"
           sx={{
             fontWeight: 700,
             letterSpacing: 1,
-            color: '#ecfdf5',
+            color: '#064e3b',
             textTransform: 'uppercase'
           }}
         >
@@ -68,20 +70,24 @@ export default function SidebarAdmin({ open }) {
 
       <List sx={{ mt: 1 }}>
         {menu.map((m, idx) => {
-          const isActive = loc.pathname === m.path
+          const isActive = activeIndex === idx
           return (
             <ListItemButton
               key={idx}
-              onClick={() => navigate(m.path)}
-              selected={isActive}
+              onClick={() => {
+                setActiveIndex(idx)
+                navigate(m.path)
+              }}
               sx={{
                 my: 0.5,
                 mx: 1,
                 borderRadius: 2,
-                color: isActive ? '#064e3b' : '#ecfdf5',
-                backgroundColor: isActive ? '#a7f3d0' : 'transparent',
+                color: isActive ? '#fff' : '#064e3b',
+                backgroundColor: isActive ? theme.palette.primary.main : 'transparent',
                 '&:hover': {
-                  backgroundColor: isActive ? '#6ee7b7' : 'rgba(255,255,255,0.12)',
+                  backgroundColor: isActive
+                    ? theme.palette.primary.dark
+                    : 'rgba(0,0,0,0.05)',
                   transform: 'scale(1.03)',
                   transition: '0.3s'
                 },
@@ -91,7 +97,7 @@ export default function SidebarAdmin({ open }) {
             >
               <ListItemIcon
                 sx={{
-                  color: isActive ? '#065f46' : '#ecfdf5',
+                  color: isActive ? '#fff' : '#064e3b',
                   minWidth: 40,
                   transform: isActive ? 'scale(1.1)' : 'none',
                   transition: '0.3s'

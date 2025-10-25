@@ -5,7 +5,6 @@ import {
   Typography,
   IconButton,
   Box,
-  Button,
   Menu,
   MenuItem,
   Avatar,
@@ -21,7 +20,6 @@ import { useAuth } from '../context/AuthContext'
 export default function Navbar({ toggleSidebar }) {
   const { user, logout } = useAuth()
 
-  // State for notification and profile menus
   const [anchorNotif, setAnchorNotif] = useState(null)
   const [anchorProfile, setAnchorProfile] = useState(null)
 
@@ -31,7 +29,6 @@ export default function Navbar({ toggleSidebar }) {
   const handleProfileOpen = (event) => setAnchorProfile(event.currentTarget)
   const handleProfileClose = () => setAnchorProfile(null)
 
-  // Example notifications (you can fetch these from backend later)
   const notifications = [
     { id: 1, message: 'New task assigned: Design Review' },
     { id: 2, message: 'Invoice #102 has been approved' },
@@ -44,7 +41,7 @@ export default function Navbar({ toggleSidebar }) {
       elevation={3}
       sx={{
         zIndex: (theme) => theme.zIndex.drawer + 1,
-        background: 'linear-gradient(90deg, #064e3b 0%, #10b981 100%)',
+        background:  '#00a862',
         color: '#ecfdf5',
         boxShadow: '0 3px 10px rgba(0, 0, 0, 0.25)',
       }}
@@ -74,7 +71,7 @@ export default function Navbar({ toggleSidebar }) {
             flexGrow: 1,
             fontWeight: 700,
             letterSpacing: 1,
-            
+            color: '#ecfdf5',
           }}
         >
           Ambara CRM
@@ -83,12 +80,12 @@ export default function Navbar({ toggleSidebar }) {
         {/* Right Section */}
         {user && (
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            {/* Notification Icon */}
+            {/* Notifications */}
             <Tooltip title="Notifications">
               <IconButton
-                color="inherit"
                 onClick={handleNotifOpen}
                 sx={{
+                  color: '#ecfdf5',
                   '&:hover': {
                     backgroundColor: 'rgba(255,255,255,0.15)',
                     transform: 'scale(1.05)',
@@ -96,24 +93,28 @@ export default function Navbar({ toggleSidebar }) {
                   },
                 }}
               >
-                <Badge badgeContent={notifications.length} color="error">
+                <Badge
+                  badgeContent={notifications.length}
+                  sx={{
+                    '& .MuiBadge-badge': {
+                      bgcolor: '#f87171', // red for unread
+                      color: '#fff',
+                    },
+                  }}
+                >
                   <NotificationsIcon />
                 </Badge>
               </IconButton>
             </Tooltip>
 
-            {/* Notification Menu */}
             <Menu
               anchorEl={anchorNotif}
               open={Boolean(anchorNotif)}
               onClose={handleNotifClose}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right',
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+              transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+              PaperProps={{
+                sx: { bgcolor: '#f9fdfc', color: '#00332e', minWidth: 240 },
               }}
             >
               <Typography
@@ -134,7 +135,7 @@ export default function Navbar({ toggleSidebar }) {
               )}
             </Menu>
 
-            {/* Profile Icon */}
+            {/* Profile */}
             <Tooltip title="Account settings">
               <IconButton
                 onClick={handleProfileOpen}
@@ -153,35 +154,28 @@ export default function Navbar({ toggleSidebar }) {
                     sx={{ width: 36, height: 36 }}
                   />
                 ) : (
-                  <Avatar sx={{ bgcolor: '#047857' }}>
+                  <Avatar sx={{ bgcolor: '#00a862' }}>
                     <AccountCircleIcon />
                   </Avatar>
                 )}
               </IconButton>
             </Tooltip>
 
-            {/* Profile Menu */}
             <Menu
               anchorEl={anchorProfile}
               open={Boolean(anchorProfile)}
               onClose={handleProfileClose}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right',
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+              transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+              PaperProps={{
+                sx: { bgcolor: '#f9fdfc', color: '#00332e', minWidth: 200 },
               }}
             >
-              <Box sx={{ px: 2, py: 1, width: 200 }}>
+              <Box sx={{ px: 2, py: 1 }}>
                 <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                   {user.name}
                 </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{ color: 'text.secondary', mb: 1 }}
-                >
+                <Typography variant="body2" sx={{ color: 'text.secondary', mb: 1 }}>
                   {user.role}
                 </Typography>
               </Box>

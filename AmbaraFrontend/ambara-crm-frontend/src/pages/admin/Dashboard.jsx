@@ -30,10 +30,10 @@ export default function Dashboard() {
 
   // Dummy Data
   const stats = [
-    { title: 'Total Customers', value: 1248, icon: <PeopleIcon sx={{ fontSize: 40, color: '#10b981' }} /> },
-    { title: 'Total Products', value: 342, icon: <InventoryIcon sx={{ fontSize: 40, color: '#10b981' }} /> },
-    { title: 'Total Orders', value: 876, icon: <ShoppingCartIcon sx={{ fontSize: 40, color: '#10b981' }} /> },
-    { title: 'Growth Rate', value: '+18%', icon: <TrendingUpIcon sx={{ fontSize: 40, color: '#10b981' }} /> }
+    { title: 'Total Customers', value: 1248, icon: <PeopleIcon sx={{ fontSize: 40, color: '#00a862' }} /> },
+    { title: 'Total Products', value: 342, icon: <InventoryIcon sx={{ fontSize: 40, color: '#00a862' }} /> },
+    { title: 'Total Orders', value: 876, icon: <ShoppingCartIcon sx={{ fontSize: 40, color: '#00a862' }} /> },
+    { title: 'Growth Rate', value: '+18%', icon: <TrendingUpIcon sx={{ fontSize: 40, color: '#00a862' }} /> }
   ]
 
   const salesData = [
@@ -81,14 +81,9 @@ export default function Dashboard() {
   }
 
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh', backgroundColor: '#f1fdf5' }}>
-      {/* Navbar */}
+    <Box sx={{ display: 'flex', minHeight: '100vh', backgroundColor: '#f9fdfc' }}>
       <Navbar toggleSidebar={toggleSidebar} />
-
-      {/* Sidebar */}
       <SidebarAdmin open={open} />
-
-      {/* Main Page */}
       <AdminPage open={open} title="Admin Dashboard">
         <Grid container spacing={3}>
           {/* Stat Cards */}
@@ -96,7 +91,7 @@ export default function Dashboard() {
             <Grid item xs={12} sm={6} md={3} key={i}>
               <Card
                 sx={{
-                  background: 'linear-gradient(135deg, #10b981 0%, #064e3b 100%)',
+                  background: 'linear-gradient(135deg, #00a862 0%, #00332e 100%)',
                   color: '#ecfdf5',
                   borderRadius: 3,
                   height: 130,
@@ -112,37 +107,37 @@ export default function Dashboard() {
                   <Typography variant="h5" fontWeight={700}>{s.value}</Typography>
                   <Typography variant="subtitle2" sx={{ opacity: 0.85 }}>{s.title}</Typography>
                 </Box>
-                <Avatar sx={{ bgcolor: 'white', width: 56, height: 56 }}>{s.icon}</Avatar>
+                <Avatar sx={{ bgcolor: '#ecfdf5', width: 56, height: 56 }}>{s.icon}</Avatar>
               </Card>
             </Grid>
           ))}
 
           {/* Sales & Customer Growth Charts */}
           <Grid item xs={12} md={8}>
-            <Card sx={{ p: 3, borderRadius: 3, background: 'linear-gradient(180deg, #ecfdf5 0%, #d1fae5 100%)' }}>
-              <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2, color: '#064e3b' }}>Monthly Sales Trend</Typography>
+            <Card sx={{ p: 3, borderRadius: 3, background: 'linear-gradient(180deg, #f9fdfc 0%, #d1fae5 100%)' }}>
+              <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2, color: '#00332e' }}>Monthly Sales Trend</Typography>
               <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={salesData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#a7f3d0" />
-                  <XAxis dataKey="name" stroke="#064e3b" />
-                  <YAxis stroke="#064e3b" />
-                  <Tooltip contentStyle={{ backgroundColor: '#064e3b', color: '#ecfdf5', borderRadius: 10 }} />
-                  <Line type="monotone" dataKey="sales" stroke="#10b981" strokeWidth={3} dot={{ r: 5, fill: '#064e3b' }} activeDot={{ r: 7 }} />
+                  <XAxis dataKey="name" stroke="#00332e" />
+                  <YAxis stroke="#00332e" />
+                  <Tooltip contentStyle={{ backgroundColor: '#00332e', color: '#ecfdf5', borderRadius: 10 }} />
+                  <Line type="monotone" dataKey="sales" stroke="#00a862" strokeWidth={3} dot={{ r: 5, fill: '#00332e' }} activeDot={{ r: 7 }} />
                 </LineChart>
               </ResponsiveContainer>
             </Card>
           </Grid>
 
           <Grid item xs={12} md={4}>
-            <Card sx={{ p: 3, borderRadius: 3, background: 'linear-gradient(180deg, #ecfdf5 0%, #d1fae5 100%)' }}>
-              <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2, color: '#064e3b' }}>Customer Growth</Typography>
+            <Card sx={{ p: 3, borderRadius: 3, background: 'linear-gradient(180deg, #f9fdfc 0%, #d1fae5 100%)' }}>
+              <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2, color: '#00332e' }}>Customer Growth</Typography>
               <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={customerGrowthData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#a7f3d0" />
-                  <XAxis dataKey="name" stroke="#064e3b" />
-                  <YAxis stroke="#064e3b" />
-                  <Tooltip contentStyle={{ backgroundColor: '#064e3b', color: '#ecfdf5', borderRadius: 10 }} />
-                  <Line type="monotone" dataKey="customers" stroke="#10b981" strokeWidth={3} dot={{ r: 5, fill: '#064e3b' }} activeDot={{ r: 7 }} />
+                  <XAxis dataKey="name" stroke="#00332e" />
+                  <YAxis stroke="#00332e" />
+                  <Tooltip contentStyle={{ backgroundColor: '#00332e', color: '#ecfdf5', borderRadius: 10 }} />
+                  <Line type="monotone" dataKey="customers" stroke="#00a862" strokeWidth={3} dot={{ r: 5, fill: '#00332e' }} activeDot={{ r: 7 }} />
                 </LineChart>
               </ResponsiveContainer>
             </Card>
@@ -150,15 +145,15 @@ export default function Dashboard() {
 
           {/* Recent Orders Table */}
           <Grid item xs={12} md={8}>
-            <Card sx={{ p: 3, borderRadius: 3 }}>
-              <Typography variant="h6" sx={{ fontWeight: 700, mb: 2 }}>Recent Orders</Typography>
+            <Card sx={{ p: 3, borderRadius: 3, backgroundColor: '#ffffff' }}>
+              <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, color: '#00332e' }}>Recent Orders</Typography>
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>ID</TableCell>
-                    <TableCell>Customer</TableCell>
-                    <TableCell>Total</TableCell>
-                    <TableCell>Status</TableCell>
+                    <TableCell sx={{ color: '#00332e' }}>ID</TableCell>
+                    <TableCell sx={{ color: '#00332e' }}>Customer</TableCell>
+                    <TableCell sx={{ color: '#00332e' }}>Total</TableCell>
+                    <TableCell sx={{ color: '#00332e' }}>Status</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -179,20 +174,33 @@ export default function Dashboard() {
 
           {/* Quick Actions & Notifications */}
           <Grid item xs={12} md={4}>
-            <Card sx={{ p: 3, borderRadius: 3, mb: 2 }}>
-              <Typography variant="h6" sx={{ fontWeight: 700, mb: 2 }}>Quick Actions</Typography>
+            <Card sx={{ p: 3, borderRadius: 3, mb: 2, backgroundColor: '#ffffff' }}>
+              <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, color: '#00332e' }}>Quick Actions</Typography>
               {['Manage Products', 'Manage Orders', 'Manage Customers', 'Settings'].map((action, i) => (
-                <Button key={i} variant={i===3 ? 'contained' : 'outlined'} fullWidth sx={{ mb: 1, textTransform: 'none', fontWeight: 500 }}>
+                <Button
+                  key={i}
+                  variant={i===3 ? 'contained' : 'outlined'}
+                  fullWidth
+                  sx={{
+                    mb: 1,
+                    textTransform: 'none',
+                    fontWeight: 500,
+                    color: i===3 ? '#ffffff' : '#00a862',
+                    borderColor: '#00a862',
+                    backgroundColor: i===3 ? '#00a862' : 'transparent',
+                    '&:hover': { backgroundColor: i===3 ? '#00332e' : '#f0fff5', borderColor: '#00332e' }
+                  }}
+                >
                   {action}
                 </Button>
               ))}
             </Card>
 
-            <Card sx={{ p: 3, borderRadius: 3 }}>
-              <Typography variant="h6" sx={{ fontWeight: 700, mb: 2 }}>Notifications</Typography>
+            <Card sx={{ p: 3, borderRadius: 3, backgroundColor: '#ffffff' }}>
+              <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, color: '#00332e' }}>Notifications</Typography>
               {notifications.map(n => (
                 <Box key={n.id} sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                  <NotificationsIcon sx={{ mr: 1, color: '#10b981' }} />
+                  <NotificationsIcon sx={{ mr: 1, color: '#00a862' }} />
                   <Typography variant="body2">{n.text} - {n.time}</Typography>
                 </Box>
               ))}
