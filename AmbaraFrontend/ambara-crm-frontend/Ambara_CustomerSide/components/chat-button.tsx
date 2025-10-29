@@ -23,7 +23,7 @@ export default function ChatButton() {
           <div className="flex items-center justify-between p-4 bg-primary text-primary-foreground">
             <div className="flex items-center gap-2">
               <MessageSquare className="w-5 h-5" />
-              <h3 className="font-semibold">Chat with us</h3>
+              <h3 className="font-semibold">Chat with us !</h3>
             </div>
             <Button 
               variant="ghost" 
