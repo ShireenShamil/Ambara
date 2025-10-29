@@ -106,8 +106,8 @@ export default function ProfilePage() {
                         <Input
                           id="phone"
                           type="tel"
-                          placeholder="+94 71 234 5678"
-                          defaultValue="+94 71 234 5678"
+                          placeholder="+94 71 324 5678"
+                          defaultValue="+94 71 324 5678"
                         />
                       </div>
                     </div>
