@@ -45,7 +45,7 @@ export default function ProfilePage() {
               
               <div className="flex-1">
                 <h2 className="text-2xl font-semibold mb-2">John Doe</h2>
-                <p className="text-muted-foreground mb-4">john@example.com</p>
+                <p className="text-muted-foreground mb-4">johnd@example.com</p>
                 <p className="text-sm text-muted-foreground">Member since October 2023</p>
               </div>
             </div>
