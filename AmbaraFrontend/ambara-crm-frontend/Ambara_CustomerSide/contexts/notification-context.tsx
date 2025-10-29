@@ -61,7 +61,7 @@ const initialState: NotificationState = {
     {
       id: "4",
       title: "Special Discount",
-      description: "Enjoy 20% off on your next custom design order! Use code DESIGN20 at checkout.",
+      description: "Enjoy 20% off on your next custom design order! Use code DESIGN%20 at checkout.",
       date: "2025-10-22",
       type: "promotion",
       read: true
