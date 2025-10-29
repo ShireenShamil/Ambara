@@ -34,7 +34,7 @@ const initialState: NotificationState = {
     {
       id: "1",
       title: "Your Order is Confirmed",
-      description: "Order #AT789 for Custom T-shirt has been confirmed. We'll start working on your design soon!",
+      description: "Order #AT7789 for Custom T-shirt has been confirmed. We'll start working on your design soon!",
       date: "2025-10-25",
       type: "order",
       read: false,
